@@ -13,8 +13,8 @@ Stack: Node.js + Express + MySQL + Sequelize + JWT.
 ## 2. Clone project từ GitHub
 
 ```bash
-git clone <link-github-cua-ban>
-cd <ten-thu-muc-project>
+git clone https://github.com/thanhle36668/C2412L_ON_NODEJS_FINAL_SOCIAL_MEDIA_API_LECHITHANH.git
+cd C2412L_ON_NODEJS_FINAL_SOCIAL_MEDIA_API_LECHITHANH
 ```
 
 ## 3. Cài dependencies
