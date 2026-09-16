@@ -1,0 +1,44 @@
+CREATE DATABASE social_db_final CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+USE social_db_final;
+
+CREATE TABLE user (
+  id INT NOT NULL AUTO_INCREMENT,
+  username VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  avatar VARCHAR(255) NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_username (username),
+  UNIQUE KEY uq_email (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE post (
+  id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  content TEXT NOT NULL,
+  image_url VARCHAR(255) NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  deleted_at DATETIME NULL,
+  PRIMARY KEY (id),
+  KEY idx_post_user_id (user_id),
+  CONSTRAINT fk_post_user FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE comment (
+  id INT NOT NULL AUTO_INCREMENT,
+  post_id INT NOT NULL,
+  user_id INT NOT NULL,
+  content TEXT NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  deleted_at DATETIME NULL,
+  PRIMARY KEY (id),
+  KEY idx_comment_post_id (post_id),
+  KEY idx_comment_user_id (user_id),
+  CONSTRAINT fk_comment_post FOREIGN KEY (post_id) REFERENCES post (id) ON DELETE CASCADE,
+  CONSTRAINT fk_comment_user FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
